@@ -52,7 +52,7 @@ export const signup = async (req, res) => {
     await storeRefreshToken(user._id, refreshToken);
 
     setCookies(res, accessToken, refreshToken);
-
+    //59:04
     res.status(201).json({
       _id: user._id,
       name: user.name,
