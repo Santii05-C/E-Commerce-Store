@@ -12,14 +12,28 @@ export const getAllProducts = async (req, res) => {
 };
 
 export const getFeaturedProducts = async (req, res) => {
-  let featuredProducts = await redis.get("featured_products");
-  if (featuredProducts) {
-    return res.json(JSON.parse(featuredProducts));
-  }
+  try {
+    let featuredProducts = await redis.get("featured_products");
+    if (featuredProducts) {
+      return res.json(JSON.parse(featuredProducts));
+    }
 
-  featuredProducts = await Product.redis.fins({ isFeatured: true }).lean();
+    featuredProducts = await Product.redis.find({ isFeatured: true }).lean();
 
-  if (!featuredProducts) {
-    return res.status(404).json({ message: "No featured products found" });
+    if (!featuredProducts) {
+      return res.status(404).json({ message: "No featured products found" });
+    }
+
+    await redis.set(
+      "featured_products",
+      JSON.stringify(featuredProducts),
+      "EX",
+      3600
+    );
+
+    res.json(featuredProducts);
+  } catch (error) {
+    console.log("Error in getFeaturedProducts controller", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
