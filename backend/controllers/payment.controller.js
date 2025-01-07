@@ -1,5 +1,4 @@
 import Coupon from "../models/coupon.model.js";
-import Order from "../models/order.model.js";
 import { stripe } from "../lib/stripe.js";
 
 export const createCheckoutSession = async (req, res) => {
@@ -59,13 +58,6 @@ export const createCheckoutSession = async (req, res) => {
       metadata: {
         userId: req.user._id.toString(),
         couponCode: couponCode || "",
-        products: JSON.stringify(
-          products.map((p) => ({
-            id: p._id,
-            quantity: p.quantity,
-            price: p.price,
-          }))
-        ),
       },
     });
 
@@ -91,12 +83,10 @@ async function createStripeCoupon(discountPercentage) {
 }
 
 async function createNewCoupon(userId) {
-  await Coupon.findOneAndDelete({ userId });
-
   const newCoupon = new Coupon({
     code: "GIFT" + Math.random().toString(36).substring(2, 8).toUpperCase(),
     discountPercentage: 10,
-    expirationDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+    expirationDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     userId: userId,
   });
 
@@ -104,3 +94,8 @@ async function createNewCoupon(userId) {
 
   return newCoupon;
 }
+
+export const checkoutSuccess = async (req, res) => {
+  try {
+  } catch (error) {}
+};
