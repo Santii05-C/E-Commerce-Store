@@ -58,10 +58,8 @@ export const getDeilySalesDate = async (startDate, endDate) => {
       revenue: foundDate?.revenue || 0,
     };
   });
-
-  re;
 };
-
+//3:10
 function getDatesInRange(startDate, endDate) {
   const dates = [];
   let currentDate = new Date(startDate);
