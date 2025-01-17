@@ -14,13 +14,14 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
 
-  const { signup, user } = useUserStore();
+  const { signup } = useUserStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("called here");
     signup(formData);
   };
-
+  //3:58:28
   return (
     <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <motion.div
