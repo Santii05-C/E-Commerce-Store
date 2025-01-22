@@ -50,15 +50,18 @@ export const createProduct = async (req, res) => {
         folder: "products",
       });
     }
+
     const product = await Product.create({
       name,
       description,
       price,
-      image: cloudinaryResponse?.url ? cloudinaryResponse.secure.url : "",
+      image: cloudinaryResponse?.secure_url
+        ? cloudinaryResponse.secure_url
+        : "",
       category,
     });
 
-    res.status(201).json({ product });
+    res.status(201).json(product);
   } catch (error) {
     console.log("Error in createProduct controller", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -152,5 +155,3 @@ async function updateFeaturedProductsCache() {
     console.log("error in update cache function");
   }
 }
-
-//2:01
