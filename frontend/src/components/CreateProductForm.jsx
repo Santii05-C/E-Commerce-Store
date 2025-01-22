@@ -26,7 +26,6 @@ const CreateProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(newProduct);
     try {
       await createProduct(newProduct);
       setNewProduct({
