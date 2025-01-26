@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useCartStore } from "../stores/useCartStore";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
+import CartItem from "../components/CartItem";
 
 const CartPage = () => {
   const { cart } = useCartStore();
@@ -15,7 +16,18 @@ const CartPage = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-          ></motion.div>
+          >
+            {cart.length === 0 ? (
+              <EmptyCartUI />
+            ) : (
+              <div className="space-y-6">
+                {cart.map((item) => (
+                  <CartItem key={item._id} item={item} />
+                ))}
+              </div>
+            )}
+            {cart.length > 0 && <PeopleAlsoBought />}
+          </motion.div>
         </div>
       </div>
     </div>
