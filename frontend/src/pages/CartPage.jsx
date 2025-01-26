@@ -3,6 +3,7 @@ import { useCartStore } from "../stores/useCartStore";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import CartItem from "../components/CartItem";
+import PeopleAlsoBought from "../components/PeopleAlsoBought";
 
 const CartPage = () => {
   const { cart } = useCartStore();
