@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import useCartStore from "../stores/useCartStore";
+import { Link } from "react-router-dom";
+import { MoveRight } from "lucide-react";
 
 const OrderSummary = () => {
   const { total, subtotal, coupon, isCouponApplied } = useCartStore();
@@ -60,10 +62,19 @@ const OrderSummary = () => {
           className="flex w-full items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={handlePayment}
         >
           Proceed to Checkout
         </motion.button>
+        <div className="flex items-center justify-center gap-2">
+          <span className="text-sm font-normal text-gray-400">or</span>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm font-medium text-emerald-400 underline hover:text-emerald-300 hover:no-underline"
+          >
+            Continue Shopping
+            <MoveRight size={16} />
+          </Link>
+        </div>
       </div>
     </motion.div>
   );
