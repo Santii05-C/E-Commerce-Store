@@ -48,7 +48,7 @@ const CartPage = () => {
     </div>
   );
 };
-
+//6:12
 export default CartPage;
 
 const EmptyCartUI = () => (
