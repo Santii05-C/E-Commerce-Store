@@ -80,7 +80,7 @@ export const createCheckoutSession = async (req, res) => {
       .json({ message: "Error processing checkout", error: error.message });
   }
 };
-
+//6:21
 export const checkoutSuccess = async (req, res) => {
   try {
     const { sessionId } = req.body;
