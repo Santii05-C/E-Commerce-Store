@@ -12,6 +12,7 @@ import useCartStore from "./stores/useCartStore";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import CartPage from "./pages/CartPage";
+import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 
 function App() {
   const { user, checkAuth, checkingAuth } = useUserStore();
@@ -58,6 +59,10 @@ function App() {
           <Route
             path="/cart"
             element={user ? <CartPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/purchase-success"
+            element={user ? <PurchaseSuccessPage /> : <Navigate to="/login" />}
           />
         </Routes>
       </div>
