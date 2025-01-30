@@ -13,9 +13,9 @@ export const createCheckoutSession = async (req, res) => {
     let totalAmount = 0;
 
     const lineItems = products.map((product) => {
-      const amount = Math.round(product.price * 100);
+      const amount = Math.round(product.price * 100); // stripe wants u to send in the format of cents
       totalAmount += amount * product.quantity;
-      //6:23
+
       return {
         price_data: {
           currency: "usd",
@@ -30,7 +30,6 @@ export const createCheckoutSession = async (req, res) => {
     });
 
     let coupon = null;
-
     if (couponCode) {
       coupon = await Coupon.findOne({
         code: couponCode,
@@ -63,7 +62,7 @@ export const createCheckoutSession = async (req, res) => {
         products: JSON.stringify(
           products.map((p) => ({
             id: p._id,
-            quantity: p._quantity,
+            quantity: p.quantity,
             price: p.price,
           }))
         ),
