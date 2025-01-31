@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useCartStore from "../stores/useCartStore";
 import axios from "../lib/axios";
+import Confetti from "react-confetti";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const PurchaseSuccessPage = () => {
   const [isProcessing, setIsProcessing] = useState(true);
@@ -33,12 +35,20 @@ const PurchaseSuccessPage = () => {
     }
   }, [clearCart]);
 
-  if (isProcessing) return "Processing...";
+  if (isProcessing) return <LoadingSpinner />;
 
   if (error) return `Error: ${error}`;
 
   return (
     <div className="h-screen flex items-center justify-center px-4">
+      <Confetti
+        width={window.innerWidth}
+        height={window.innerHeight}
+        gravity={0.1}
+        style={{ zIndex: 99 }}
+        numberOfPieces={700}
+        recycle={false}
+      />
       <div className="max-w-md w-full bg-gray-800 rounded-lg shadow-xl overflow-hidden relative z-10">
         <div className="p-6 sm:p-8">
           <div className="flex justify-center">
