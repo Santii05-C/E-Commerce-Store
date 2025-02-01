@@ -1,16 +1,18 @@
 import Order from "../models/order.model.js";
-import User from "../models/user.model.js";
 import Product from "../models/product.model.js";
+import User from "../models/user.model.js";
 
-export const getAnalyticData = async () => {
+export const getAnalyticsData = async () => {
   const totalUsers = await User.countDocuments();
   const totalProducts = await Product.countDocuments();
 
   const salesData = await Order.aggregate([
     {
-      _id: null,
-      totalSales: { $sum: 1 },
-      totalRevenue: { $sum: "$totalAmount" },
+      $group: {
+        _id: null,
+        totalSales: { $sum: 1 },
+        totalRevenue: { $sum: "$totalAmount" },
+      },
     },
   ]);
 
@@ -40,7 +42,7 @@ export const getDailySalesData = async (startDate, endDate) => {
       },
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "%createdAt" } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
           sales: { $sum: 1 },
           revenue: { $sum: "$totalAmount" },
         },
@@ -51,12 +53,12 @@ export const getDailySalesData = async (startDate, endDate) => {
     const dateArray = getDatesInRange(startDate, endDate);
 
     return dateArray.map((date) => {
-      const foundDate = dailySalesData.find((item) => item._id === date);
+      const foundData = dailySalesData.find((item) => item._id === date);
 
       return {
         date,
-        sales: foundDate?.sales || 0,
-        revenue: foundDate?.revenue || 0,
+        sales: foundData?.sales || 0,
+        revenue: foundData?.revenue || 0,
       };
     });
   } catch (error) {

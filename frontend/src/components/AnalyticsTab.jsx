@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import axios from "../lib/axios";
+import { Users, Package, ShoppingCart, DollarSign } from "lucide-react";
+import LoadingSpinner from "./LoadingSpinner";
 
 const AnalyticsTab = () => {
   const [analyticsData, setAnalyticsData] = useState({
@@ -27,7 +30,40 @@ const AnalyticsTab = () => {
     fetchAnalyticsData();
   }, []);
 
-  return <div>AnalyticsTab</div>;
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <AnalyticsCard
+          title="Total Users"
+          value={analyticsData.users.toLocaleString()}
+          icon={Users}
+          color="from-emerald-500 to-teal-700"
+        />
+        <AnalyticsCard
+          title="Total Products"
+          value={analyticsData.products.toLocaleString()}
+          icon={Package}
+          color="from-emerald-500 to-green-700"
+        />
+        <AnalyticsCard
+          title="Total Sales"
+          value={analyticsData.totalSales.toLocaleString()}
+          icon={ShoppingCart}
+          color="from-emerald-500 to-cyan-700"
+        />
+        <AnalyticsCard
+          title="Total Revenue"
+          value={`$${analyticsData.totalRevenue.toLocaleString()}`}
+          icon={DollarSign}
+          color="from-emerald-500 to-lime-700"
+        />
+      </div>
+    </div>
+  );
 };
 
 export default AnalyticsTab;
