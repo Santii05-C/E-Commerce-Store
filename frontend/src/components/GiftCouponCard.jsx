@@ -20,11 +20,10 @@ const GiftCouponCard = () => {
     applyCoupon(userInputCode);
   };
 
-  const handleRemoveCoupon = () => {
-    console.log("remove coupon");
+  const handleRemoveCoupon = async () => {
+    await removeCoupon();
+    setUserInputCode("");
   };
-
-  //6:51
 
   return (
     <motion.div

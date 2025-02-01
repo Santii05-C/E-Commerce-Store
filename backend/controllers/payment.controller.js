@@ -123,12 +123,10 @@ export const checkoutSuccess = async (req, res) => {
     }
   } catch (error) {
     console.error("Error processing successful checkout:", error);
-    res
-      .status(500)
-      .json({
-        message: "Error processing successful checkout",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error processing successful checkout",
+      error: error.message,
+    });
   }
 };
 
@@ -142,10 +140,12 @@ async function createStripeCoupon(discountPercentage) {
 }
 
 async function createNewCoupon(userId) {
+  await Coupon.findOneAndDelete({ userId });
+
   const newCoupon = new Coupon({
     code: "GIFT" + Math.random().toString(36).substring(2, 8).toUpperCase(),
     discountPercentage: 10,
-    expirationDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    expirationDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
     userId: userId,
   });
 
