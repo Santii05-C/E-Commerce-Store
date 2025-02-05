@@ -112,5 +112,3 @@ const FeaturedProducts = ({ featuredProducts }) => {
 };
 
 export default FeaturedProducts;
-
-//26-3
